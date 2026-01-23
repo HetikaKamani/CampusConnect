@@ -1,0 +1,133 @@
+.committee-card {
+  width: 380px;
+  height: 320px;
+  border-radius: 18px;
+  overflow: hidden;
+  /* background: #0b0f1a; */
+  background: transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.committee-card:hover {
+  transform: translateY(-6px);
+}
+.card-header {
+  
+  height: 180px;
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.card-header::after{
+  content:"";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+   rgba(0,0,0,0.15) 0%,
+    rgba(0,0,0,0.55) 45%,
+    rgba(0,0,0,1) 100%
+  );
+    z-index: 1;
+}
+
+.card-header h3 {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  position:relative;
+  z-index: 2;
+}
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.6)
+  );
+  z-index: 1;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  z-index: 2;
+}
+.card-body {
+  padding: 20px;
+  background: #0b0f1a;
+  height:calc(260px - 140px);
+}
+
+.card-body p {
+  color: #cbd5e1;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.followers {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.view-link {
+  color: #8b5cf6;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.committee-card.purple{
+    border : 2px solid rgba(139, 92, 246, 0.6);
+}
+
+.committee-card.purple:hover {
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+}
+
+.committee-card.pink{
+    border: 2px solid rgba(236, 72, 153, 0.6)
+}
+
+.committee-card.pink:hover {
+  box-shadow: 0 20px 40px rgba(236, 72, 153, 0.3);
+}
+
+.committee-card.blue{
+    border: 2px solid rgba(30, 58, 138, 0.95)
+}
+
+.committee-card.blue:hover {
+  box-shadow: 0 20px 40px rgba(30, 58, 138, 0.3) ;
+}
+
+.committee-card.orange{
+    border: 2px solid rgba(249, 115, 22, 0.6) 
+}
+
+.committee-card.orange:hover {
+  box-shadow: 0 20px 40px rgba(249, 115, 22, 0.3);
+}
+
+.committee-card.green{
+    border: 2px solid rgba(34, 197, 94, 0.6);
+}
+
+.committee-card.green:hover {
+  box-shadow: 0 20px 40px rgba(34, 197, 94, 0.3);
+}
+
+.card-header{
+  width:100%;
+  /* background-clip: padding-box; */
+}
