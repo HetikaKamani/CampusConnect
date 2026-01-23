@@ -147,7 +147,7 @@
 .event-card-wrapper:hover {
   transform: translateY(-6px);
 }
-/* BLUE */
+
 .event-card-wrapper.blue {
   border: 2px solid rgba(30, 58, 138, 0.9);
 }
@@ -155,7 +155,6 @@
   box-shadow: 0 30px 45px rgba(30, 58, 138, 0.45);
 }
 
-/* PINK */
 .event-card-wrapper.pink {
   border: 2px solid rgba(236, 72, 153, 0.7);
 }
@@ -163,7 +162,6 @@
   box-shadow: 0 30px 45px rgba(236, 72, 153, 0.45);
 }
 
-/* ORANGE */
 .event-card-wrapper.orange {
   border: 2px solid rgba(249, 115, 22, 0.7);
 }
@@ -171,7 +169,7 @@
   box-shadow: 0 30px 45px rgba(249, 115, 22, 0.45);
 }
 
-/* GREEN */
+
 .event-card-wrapper.green {
   border: 2px solid rgba(34, 197, 94, 0.7);
 }
@@ -179,7 +177,6 @@
   box-shadow: 0 30px 45px rgba(34, 197, 94, 0.45);
 }
 
-/* PURPLE */
 .event-card-wrapper.purple {
   border: 2px solid rgba(139, 92, 246, 0.7);
 }

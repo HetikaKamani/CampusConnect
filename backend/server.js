@@ -4,7 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
-import eventRoutes from "./routes/eventRoutes.js"; // ✅ ADD THIS
+import eventRoutes from "./routes/eventRoutes.js"; 
 
 dotenv.config();
 connectDB();
@@ -14,10 +14,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔐 Admin Auth Routes
+
 app.use("/api/admin", authRoutes);
 
-// 📅 Event Routes
+
 app.use("/api/events", eventRoutes);
 
 app.get("/", (req, res) => {

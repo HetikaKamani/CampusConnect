@@ -5,13 +5,13 @@ const events = [
     description:
       "An energetic night filled with music, lights, and celebration.",
 
-    /* Existing date (for UI display) */
+  
     date: {
       day: "12",
       monthYear: "JAN 2026",
     },
 
-    /* NEW: for filtering & sorting */
+ 
     startDate: "2026-01-12T20:00",
     endDate: "2026-01-12T23:59",
 
@@ -21,7 +21,6 @@ const events = [
     committee: "Cultural",
     committeeId: "cultural",
 
-    /* NEW: category filter uses this */
     category: "cultural",
 
     status: "Happening Now",

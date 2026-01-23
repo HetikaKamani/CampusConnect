@@ -12,7 +12,6 @@ export default function Updates() {
         const res = await fetch("http://localhost:5000/api/events");
         const events = await res.json();
 
-        // flatten all updates from all events
         const allUpdates = events.flatMap((event) =>
           event.updates.map((u) => ({
             ...u,
