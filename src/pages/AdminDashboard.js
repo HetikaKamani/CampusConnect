@@ -7,7 +7,6 @@ import CreateEventModal from "../components/CreateEventModal";
 export default function AdminDashboard() {
   const { auth } = useAuth();
 
-  // 🔐 Auth data
   const committeeId = auth?.committeeId;
   const token = auth?.token;
 
@@ -23,7 +22,7 @@ export default function AdminDashboard() {
 
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  // 🔔 Announcement modal states
+
 const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
 const [selectedEventId, setSelectedEventId] = useState(null);
 const [announcementType, setAnnouncementType] = useState("Update");
