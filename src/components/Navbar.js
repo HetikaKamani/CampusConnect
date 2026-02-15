@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import "./Navbar.css";
 
 function Navbar() {
-  const { auth, logout } = useAuth(); // ✅ CORRECT
+  const { auth, logout } = useAuth(); 
   const navigate = useNavigate();
 
   return (

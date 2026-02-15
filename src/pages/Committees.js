@@ -1,5 +1,3 @@
-
-
 import CommitteeCard from "../components/CommitteeCard";
 import  committees from "../data/committees";
 import "./Committees.css";

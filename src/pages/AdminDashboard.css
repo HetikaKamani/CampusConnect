@@ -5,8 +5,8 @@
 }
 
 .dashboard-container {
-  max-width: 1200px;          /* controls left-right distance */
-  margin: 0 auto;             /* centers everything */
+  max-width: 1200px;       
+  margin: 0 auto;             
   padding: 80px 24px;
   color: white;
 }

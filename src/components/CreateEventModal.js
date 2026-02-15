@@ -5,11 +5,11 @@ const CreateEventModal = ({
   isOpen,
   onClose,
   onCreate,
-  onUpdate,      // ✅
+  onUpdate,      
   committee,
   committeeId,
-  isEditMode,    // ✅
-  editingEvent,  // ✅
+  isEditMode,   
+  editingEvent,  
 }) => {
   const [formData, setFormData] = useState({
     title: "",
