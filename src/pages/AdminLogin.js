@@ -75,6 +75,38 @@ export default function AdminLogin() {
             {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
+<div
+  className="demo-box"
+  style={{ marginTop: "12px" }}
+>
+  <div
+    className="demo-title"
+    style={{ fontSize: "13px", color: "#9ca3af", marginBottom: "4px" }}
+  >
+    Demo Credentials
+  </div>
+
+  <div style={{ fontSize: "12px", color: "#9ca3af", lineHeight: "1.6" }}>
+    technical@campusconnect.com<br />
+    cultural@campusconnect.com<br />
+    literary@campusconnect.com<br />
+    sports@campusconnect.com<br />
+    entrepreneur@campusconnect.com
+  </div>
+
+  <div
+    style={{
+      fontSize: "12px",
+      color: "#9ca3af",
+      marginTop: "6px"
+    }}
+  >
+    Password: admin123
+  </div>
+</div>
+
+
+
       </div>
     </div>
   );
