@@ -14,13 +14,36 @@ function Home() {
   ];
 
   const [currentImage, setCurrentImage] = useState(0);
-
+  const [upcomingCount,setUpcomingCount]=useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % memoryImages.length);
     }, 3500);
 
     return () => clearInterval(interval);
+  }, []);
+  useEffect(() => {
+    fetch("http://localhost:5000/api/events")
+      .then((res) => res.json())
+      .then((data) => {
+        if(!Array.isArray(data)) return;
+
+      //   const today = new Date();
+      //   today.setHours(0,0,0,0);
+      // const upcomingEvents = data.filter((event) => {
+      //   const eventStartDate = new Date(event.startDate);
+      //   return eventStartDate >= today;
+      // });
+
+      //   setUpcomingCount(upcomingEvents.length);
+      const upcomingEvents = data.filter(
+  (event) => event.status !== "Completed"
+);
+
+setUpcomingCount(upcomingEvents.length);
+
+      })
+      .catch((err) => console.error("Failed to fetch events", err));
   }, []);
 
   return (
@@ -63,7 +86,7 @@ function Home() {
 
               <div className="hero-stats">
                 <div className="stat">
-                  <h3>6+</h3>
+                  <h3>{upcomingCount}</h3>
                   <p>Upcoming Events</p>
                 </div>
                 <div className="stat">
@@ -102,7 +125,7 @@ function Home() {
           <p className="com-subtitle">Committees you're following</p>
 
           <div className="following">
-            {/* Committee cards will come here */}
+            {/* Committee which we follow will come here */}
           </div>
         </div>
       </div>

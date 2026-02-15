@@ -8,6 +8,7 @@ import {
   markEventCompleted,
   deleteEvent,
   rsvpEvent,
+  updateEvent,
 } from "../controllers/eventController.js";
 import { protectAdmin } from "../middleware/authMiddleware.js";
 
@@ -23,7 +24,7 @@ router.patch("/:id/complete", protectAdmin, markEventCompleted);
 router.post("/:id/update", protectAdmin, postAnnouncement);
 router.delete("/:id", protectAdmin, deleteEvent);
 router.post("/:id/rsvp", rsvpEvent);
-
+router.put("/:id",protectAdmin,updateEvent);
 
 router.get("/:id", getEventById);
 

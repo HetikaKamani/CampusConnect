@@ -3,6 +3,23 @@ import { Link } from "react-router-dom";
 import committees from "../data/committees";
 
 function EventCard({ event }) {
+    const now = new Date();
+  const startDate = new Date(event.startDate);
+  const endDate = event.endDate
+    ? new Date(event.endDate)
+    : new Date(event.startDate);
+
+  let statusText = "Upcoming";
+  let statusClass = "upcoming";
+
+  if (now >= startDate && now <= endDate) {
+    statusText = "Happening Now";
+    statusClass = "live";
+  } else if (now > endDate) {
+    statusText = "Completed";
+    statusClass = "completed";
+  }
+
   const committee = committees.find(
     (c) => c.id === event.committeeId
   );
@@ -17,9 +34,13 @@ function EventCard({ event }) {
         >
           <div className="event-overlay"></div>
 
-          <span className="badge status">
+          {/* <span className="badge status">
             {event.status || "Upcoming"}
-          </span>
+          </span> */}
+          <span className={`badge status ${statusClass}`}>
+  {statusText}
+</span>
+
 
           <span
             className="badge committee"

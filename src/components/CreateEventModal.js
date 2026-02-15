@@ -1,12 +1,15 @@
 import "./CreateEventModal.css";
-import { useState } from "react";
+import { useState,useEffect} from "react";
 
 const CreateEventModal = ({
   isOpen,
   onClose,
   onCreate,
+  onUpdate,      // ✅
   committee,
   committeeId,
+  isEditMode,    // ✅
+  editingEvent,  // ✅
 }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -18,6 +21,20 @@ const CreateEventModal = ({
     tags: "",
     image: "",
   });
+    useEffect(() => {
+  if (isEditMode && editingEvent) {
+    setFormData({
+      title: editingEvent.title || "",
+      description: editingEvent.description || "",
+      category: editingEvent.category || "",
+      venue: editingEvent.venue || "",
+      startDate: editingEvent.startDate?.slice(0, 16),
+      endDate: editingEvent.endDate?.slice(0, 16),
+      tags: editingEvent.tags?.join(", ") || "",
+      image: editingEvent.image || "",
+    });
+  }
+}, [isEditMode, editingEvent]);
 
   if (!isOpen) return null;
 
@@ -62,7 +79,12 @@ const CreateEventModal = ({
         "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
     };
 
-    onCreate(newEvent);
+   if (isEditMode) {
+  onUpdate(editingEvent._id, newEvent);
+} else {
+  onCreate(newEvent);
+}
+
     onClose();
 
     setFormData({
@@ -77,11 +99,14 @@ const CreateEventModal = ({
     });
   };
 
+
+
   return (
     <div className="modal-overlay">
       <div className="modal">
         <div className="modal-header">
-          <h2>Create New Event</h2>
+          <h2>{isEditMode ? "Edit Event" : "Create New Event"}</h2>
+
           <button className="close-btn" onClick={onClose}>
             ✕
           </button>
@@ -89,15 +114,15 @@ const CreateEventModal = ({
 
         <div className="modal-body">
           <label>Title</label>
-          <input name="title" onChange={handleChange} />
+          <input name="title" value={formData.title} onChange={handleChange} />
 
           <label>Description</label>
-          <textarea name="description" onChange={handleChange} />
+          <textarea name="description" value={formData.description} onChange={handleChange} />
 
           <div className="row">
             <div>
               <label>Category</label>
-              <select name="category" onChange={handleChange}>
+              <select name="category" value={formData.category} onChange={handleChange}>
                 <option value="">Select category</option>
                 <option value="cultural">Cultural</option>
                 <option value="technical">Technical</option>
@@ -108,7 +133,7 @@ const CreateEventModal = ({
 
             <div>
               <label>Venue</label>
-              <input name="venue" onChange={handleChange} />
+              <input name="venue" value={formData.venue} onChange={handleChange} />
             </div>
           </div>
 
@@ -118,6 +143,7 @@ const CreateEventModal = ({
               <input
                 type="datetime-local"
                 name="startDate"
+                value={formData.startDate}
                 onChange={handleChange}
               />
             </div>
@@ -127,6 +153,7 @@ const CreateEventModal = ({
               <input
                 type="datetime-local"
                 name="endDate"
+                 value={formData.endDate}
                 onChange={handleChange}
               />
             </div>
@@ -135,6 +162,7 @@ const CreateEventModal = ({
           <label>Tags (comma separated)</label>
           <input
             name="tags"
+              value={formData.tags}
             placeholder="coding, hackathon"
             onChange={handleChange}
           />
@@ -142,6 +170,7 @@ const CreateEventModal = ({
           <label>Poster URL (optional)</label>
           <input
             name="image"
+              value={formData.image}
             placeholder="https://example.com/poster.jpg"
             onChange={handleChange}
           />
@@ -151,9 +180,13 @@ const CreateEventModal = ({
           <button className="cancel-btn" onClick={onClose}>
             Cancel
           </button>
-          <button className="create-btn" onClick={handleSubmit}>
+          {/* <button className="create-btn" onClick={handleSubmit}>
             Create Event
-          </button>
+          </button> */}
+          <button className="create-btn" onClick={handleSubmit}>
+  {isEditMode ? "Update Event" : "Create Event"}
+</button>
+
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import Event from "../models/Event.js";
-
+import {sendEmail}from "../utils/sendEmail.js";
 
 export const createEvent = async (req, res) => {
   try {
@@ -145,6 +145,45 @@ export const postAnnouncement = async (req, res) => {
 };
 
 
+// export const rsvpEvent = async (req, res) => {
+//   try {
+//     const { name, email } = req.body;
+
+//     if (!name || !email) {
+//       return res.status(400).json({ message: "Name and email required" });
+//     }
+
+//     const event = await Event.findById(req.params.id);
+//     if (!event) {
+//       return res.status(404).json({ message: "Event not found" });
+//     }
+
+//     const alreadyRSVPed = event.rsvps.some(
+//       (r) => r.email === email.toLowerCase()
+//     );
+
+//     if (alreadyRSVPed) {
+//       return res
+//         .status(400)
+//         .json({ message: "You have already RSVPed" });
+//     }
+
+//     event.rsvps.push({
+//       name,
+//       email: email.toLowerCase(),
+//     });
+
+//     await event.save();
+
+//     res.status(200).json({
+//       message: "RSVP successful",
+//       totalRSVPs: event.rsvps.length,
+//     });
+//   } catch (error) {
+//     console.error("RSVP Error:", error);
+//     res.status(500).json({ message: "Failed to RSVP" });
+//   }
+// };
 export const rsvpEvent = async (req, res) => {
   try {
     const { name, email } = req.body;
@@ -168,6 +207,7 @@ export const rsvpEvent = async (req, res) => {
         .json({ message: "You have already RSVPed" });
     }
 
+    // ✅ Save RSVP
     event.rsvps.push({
       name,
       email: email.toLowerCase(),
@@ -175,13 +215,104 @@ export const rsvpEvent = async (req, res) => {
 
     await event.save();
 
+    /* ===================== EMAILS ===================== */
+
+    // 1️⃣ Student confirmation email
+    await sendEmail({
+      to: email,
+      subject: `RSVP Confirmed: ${event.title}`,
+      html: `
+        <h2>You're In! 🎉</h2>
+        <p>Hi <b>${name}</b>,</p>
+        <p>Your RSVP for <b>${event.title}</b> is confirmed.</p>
+        <p><b>Date:</b> ${new Date(event.startDate).toDateString()}</p>
+        <p><b>Venue:</b> ${event.venue}</p>
+        <br />
+        <p>– CampusConnect</p>
+      `,
+    });
+
+    // 2️⃣ Admin notification email
+    await sendEmail({
+      to: "hetikakamani@gmail.com",
+      subject: `New RSVP for ${event.title}`,
+      html: `
+        <h3>New RSVP Received</h3>
+        <p><b>Event:</b> ${event.title}</p>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+      `,
+    });
+
+    /* ================================================== */
+
     res.status(200).json({
       message: "RSVP successful",
       totalRSVPs: event.rsvps.length,
     });
+  }catch (error) {
+  console.error("RSVP Error FULL:", error);
+  res.status(500).json({
+    message: "Failed to RSVP",
+    error: error.message,
+  });
+}
+
+};
+
+
+// export const updateEvent = async (req, res) => {
+//   try {
+//     const updatedEvent = await Event.findOneAndUpdate(
+//       {
+//         _id: req.params.id,
+//         committeeId: req.admin.committeeId,
+//       },
+//       req.body,
+//       { new: true }
+//     );
+
+//     if (!updatedEvent) {
+//       return res.status(404).json({ message: "Event not found" });
+//     }
+
+//     res.json(updatedEvent);
+//   } catch (error) {
+//     console.error("Update Event Error:", error);
+//     res.status(500).json({ message: "Failed to update event" });
+//   }
+// };
+export const updateEvent = async (req, res) => {
+  try {
+    const updateData = { ...req.body };
+
+    // ✅ AUTO-FIX STATUS BASED ON DATE
+    if (updateData.startDate) {
+      const start = new Date(updateData.startDate);
+      const now = new Date();
+
+      if (start > now) {
+        updateData.status = "Upcoming";
+      }
+    }
+
+    const updatedEvent = await Event.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        committeeId: req.admin.committeeId,
+      },
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedEvent) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    res.json(updatedEvent);
   } catch (error) {
-    console.error("RSVP Error:", error);
-    res.status(500).json({ message: "Failed to RSVP" });
+    console.error("Update Event Error:", error);
+    res.status(500).json({ message: "Failed to update event" });
   }
 };
 

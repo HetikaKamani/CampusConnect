@@ -47,7 +47,7 @@ const seedAdmins = async () => {
     await Admin.create(admin);
   }
 
-  console.log("✅ Admins seeded successfully");
+  console.log("Admins seeded successfully");
   process.exit();
 };
 

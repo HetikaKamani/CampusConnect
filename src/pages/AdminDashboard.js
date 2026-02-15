@@ -27,6 +27,9 @@ const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
 const [selectedEventId, setSelectedEventId] = useState(null);
 const [announcementType, setAnnouncementType] = useState("Update");
 const [announcementText, setAnnouncementText] = useState("");
+const [editingEvent, setEditingEvent] = useState(null);
+const [isEditMode, setIsEditMode] = useState(false);
+
 const fetchEvents = async () => {
   try {
     const res = await fetch("http://localhost:5000/api/events/my", {
@@ -96,6 +99,19 @@ const fetchEvents = async () => {
 
     fetchEvents();
   };
+  const handleUpdateEvent = async (id, updatedData) => {
+  await fetch(`http://localhost:5000/api/events/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(updatedData),
+  });
+
+  fetchEvents();
+};
+
 
 const totalRSVPs = Array.isArray(events)
   ? events.reduce(
@@ -231,7 +247,39 @@ async function handlePostAnnouncement() {
                     setSelectedEventId(event._id);
                     setShowAnnouncementModal(true);
                   }}>🔔</span>
-                  <span title="Edit Event">✏️</span>
+                  {/* <span title="Edit Event">✏️</span> */}
+                  {/* <span
+  title="Edit Event"
+  onClick={() => {
+    setEditingEvent(event);
+    setIsEditMode(true);
+    setShowModal(true);
+  }}
+>
+  ✏️
+</span> */}
+<span
+  title={
+    event.status === "Completed"
+      ? "Completed events cannot be edited"
+      : "Edit Event"
+  }
+  style={{
+    cursor: event.status === "Completed" ? "not-allowed" : "pointer",
+    opacity: event.status === "Completed" ? 0.5 : 1,
+  }}
+  onClick={() => {
+    if (event.status === "Completed") return;
+
+    setEditingEvent(event);
+    setIsEditMode(true);
+    setShowModal(true);
+  }}
+>
+  ✏️
+</span>
+
+
                   <span
                     title="Delete Event"
                     onClick={() => deleteEvent(event._id)}
@@ -244,13 +292,28 @@ async function handlePostAnnouncement() {
           )}
         </div>
 
-        <CreateEventModal
+        {/* <CreateEventModal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           onCreate={handleCreateEvent}
           committee={committee}
           committeeId={committeeId}
-        />
+        /> */}
+        <CreateEventModal
+  isOpen={showModal}
+  onClose={() => {
+    setShowModal(false);
+    setEditingEvent(null);
+    setIsEditMode(false);
+  }}
+  onCreate={handleCreateEvent}
+  onUpdate={handleUpdateEvent}
+  committee={committee}
+  committeeId={committeeId}
+  isEditMode={isEditMode}
+  editingEvent={editingEvent}
+/>
+
       </div>
       {showAnnouncementModal && (
   <div className="modal-overlay">

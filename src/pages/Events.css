@@ -68,7 +68,7 @@
   color: #94a3b8;
 }
 
-/* ✅ GRID — THIS IS THE IMPORTANT PART */
+
 .events-grid {
   display: grid;
   grid-template-columns: repeat(3,400px);
@@ -76,7 +76,7 @@
   gap:32px; 
 }
 
-/* Responsive (optional but safe) */
+
 @media (max-width: 1200px) {
   .events-grid {
     grid-template-columns: repeat(2, 1fr);

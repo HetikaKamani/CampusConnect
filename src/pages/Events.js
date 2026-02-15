@@ -47,11 +47,28 @@ function Events() {
     const categoryMatch =
       category === "all" || event.category === category;
 
-    const eventEnded = new Date(event.endDate) < now;
+    // const eventEnded = new Date(event.endDate) < now;
 
+    // let statusMatch = true;
+    // if (statusFilter === "upcoming") statusMatch = !eventEnded;
+    // if (statusFilter === "past") statusMatch = eventEnded;
+      const startDate = new Date(event.startDate);
+  const endDate = event.endDate
+    ? new Date(event.endDate)
+    : new Date(event.startDate);
     let statusMatch = true;
-    if (statusFilter === "upcoming") statusMatch = !eventEnded;
-    if (statusFilter === "past") statusMatch = eventEnded;
+
+if (statusFilter === "upcoming") {
+  statusMatch = now< startDate;
+}
+
+if (statusFilter === "past") {
+  statusMatch = now > endDate;
+}
+
+if (statusFilter === "happening now") {
+    statusMatch = now >= startDate && now <= endDate;
+  }
 
     return (
       searchMatch &&
@@ -115,6 +132,7 @@ function Events() {
             <option value="all">All Events</option>
             <option value="upcoming">Upcoming</option>
             <option value="past">Past</option>
+            <option value="happening now">Happening Now</option>
           </select>
 
           <button className="completed-btn" onClick={clearFilters}>

@@ -103,3 +103,31 @@ events-grid {
   width: 220px;
   color: white;
 } */
+.events-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.events-search {
+  width:320px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #0f172a;
+  color: white;
+  border: 1px solid #1e293b;
+}
+
+.events-filter {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #0f172a;
+  color: white;
+  border: 1px solid #1e293b;
+}
+
+.events-count {
+  color: #94a3b8;
+  margin-bottom: 16px;
+}
