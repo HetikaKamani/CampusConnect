@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "./CommitteeDetail.css";
 import committees from "../data/committees";
 import EventCard from "../components/EventCard";
-
+import { API_BASE } from "../api";
 function CommitteeDetail() {
   const { id } = useParams();
 
@@ -20,7 +20,7 @@ function CommitteeDetail() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/events");
+        const res = await fetch(`${API_BASE}/api/events`);
         const data = await res.json();
         setEvents(data);
       } catch (error) {

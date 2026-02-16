@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import "./RSVPModal.css";
+import { API_BASE } from "../api";
+
 
 export default function RSVPModal({ event, onClose }) {
   const [name, setName] = useState("");
@@ -17,14 +19,16 @@ export default function RSVPModal({ event, onClose }) {
     try {
       setLoading(true);
 
+
       const res = await fetch(
-        `http://localhost:5000/api/events/${event._id}/rsvp`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email }),
-        }
-      );
+  `${API_BASE}/api/events/${event._id}/rsvp`,
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email }),
+  }
+);
+
 
       const data = await res.json();
 

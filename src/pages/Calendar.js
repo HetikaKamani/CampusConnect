@@ -1,6 +1,7 @@
 import "./Calendar.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../api";
 
 const committeeColors = {
   technical: "#6366f1",
@@ -18,7 +19,7 @@ function Calendar() {
   const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/events")
+    fetch(`${API_BASE}/api/events`)
       .then((res) => res.json())
       .then((data) => Array.isArray(data) && setEvents(data))
       .catch(console.error);

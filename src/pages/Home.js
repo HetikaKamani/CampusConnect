@@ -2,6 +2,7 @@
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { API_BASE } from "../api";
 
 function Home() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function Home() {
     return () => clearInterval(interval);
   }, []);
   useEffect(() => {
-    fetch("http://localhost:5000/api/events")
+    fetch(`${API_BASE}/api/events`)
       .then((res) => res.json())
       .then((data) => {
         if(!Array.isArray(data)) return;

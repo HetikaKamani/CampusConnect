@@ -1,7 +1,8 @@
-  import "./AdminDashboard.css";
+import "./AdminDashboard.css";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import CreateEventModal from "../components/CreateEventModal";
+import { API_BASE } from "../api";
 
 
 export default function AdminDashboard() {
@@ -32,7 +33,7 @@ const [isEditMode, setIsEditMode] = useState(false);
 
 const fetchEvents = async () => {
   try {
-    const res = await fetch("http://localhost:5000/api/events/my", {
+    const res = await fetch(`${API_BASE}/api/events/my`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -60,7 +61,7 @@ const fetchEvents = async () => {
 
   const handleCreateEvent = async (newEvent) => {
     try {
-      const res = await fetch("http://localhost:5000/api/events", {
+      const res = await fetch(`${API_BASE}/api/events`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +79,7 @@ const fetchEvents = async () => {
 
 
   const markCompleted = async (id) => {
-    await fetch(`http://localhost:5000/api/events/${id}/complete`, {
+    await fetch(`${API_BASE}/api/events/${id}/complete`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -90,7 +91,7 @@ const fetchEvents = async () => {
   const deleteEvent = async (id) => {
     if (!window.confirm("Delete this event?")) return;
 
-    await fetch(`http://localhost:5000/api/events/${id}`, {
+    await fetch(`${API_BASE}/api/events/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -100,7 +101,7 @@ const fetchEvents = async () => {
     fetchEvents();
   };
   const handleUpdateEvent = async (id, updatedData) => {
-  await fetch(`http://localhost:5000/api/events/${id}`, {
+  await fetch(`${API_BASE}/api/events/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -129,7 +130,7 @@ async function handlePostAnnouncement() {
 
   try {
     await fetch(
-      `http://localhost:5000/api/events/${selectedEventId}/update`,
+      `${API_BASE}/api/events/${selectedEventId}/update`,
       {
         method: "POST",
         headers: {

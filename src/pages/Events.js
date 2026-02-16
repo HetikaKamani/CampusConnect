@@ -1,7 +1,7 @@
 import "./Events.css";
 import EventCard from "../components/EventCard";
 import { useState, useEffect } from "react";
-
+import { API_BASE } from "../api";
 function Events() {
   const [events, setEvents] = useState([]);
   const [search, setSearch] = useState("");
@@ -14,7 +14,7 @@ function Events() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/events");
+        const res = await fetch(`${API_BASE}/api/events`);
         const data = await res.json();
         setEvents(data);
       } catch (err) {

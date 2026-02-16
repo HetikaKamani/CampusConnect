@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Updates.css";
+import { API_BASE } from "../api";
 
 export default function Updates() {
   const [updates, setUpdates] = useState([]);
@@ -9,7 +10,7 @@ export default function Updates() {
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/events");
+        const res = await fetch(`${API_BASE}/api/events`);
         const events = await res.json();
 
         const allUpdates = events.flatMap((event) =>

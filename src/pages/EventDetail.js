@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RSVPModal from "../components/RSVPModal";
 import committees from "../data/committees";
+import { API_BASE } from "../api";
 
 function EventDetail() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ function EventDetail() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/events/${id}`);
+        const res = await fetch(`${API_BASE}/api/events/${id}`);
         const data = await res.json();
 
         if (!res.ok) {
